@@ -51,21 +51,38 @@ header{
   /* padding-right: 40px; */
   padding-inline-start: 0px;
 }
+
+.icon{
+  display: block;
+  padding:4px;
+}
+.iconb{
+  display: block;
+  padding:4px;
+  color: #0096cd;
+}
+
 li{
   float:left;
   cursor: pointer;
-  width: 40px;
-  height : 45px;
+  width: 20px;
+  height : 20px;
   display: block;
-  transition: all .25s ease-out;
+ 
+  overflow: hidden;
   /* margin:20px; */
 }
+.ease{
+  transition: all .3s ease-out;
+}
 
-li:hover{
-  color:#0096cd;
+ /* li:hover{
+  /* color:#0096cd; */
+  /* transform: translate(0px,-22px); */
+/* }  */
 
-  /* transform: translateY(-10px); */
-  transform: scale(1.5)
+div.active{
+  transform: translate(0px,-24px);
 }
 .rel{
   position: relative;

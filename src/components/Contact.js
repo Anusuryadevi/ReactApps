@@ -4,9 +4,10 @@ import { faCalendarAlt, faEnvelope, faMapMarkedAlt, faPhoneAlt, faSpaghettiMonst
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-// var userInfo = {"name": "Anusuryadevi S R", "email":"anusurya.ravi@gmail.com","DOB":"08 Jun 1995",
-// "address":"Coimbatore, Tamilnadu","phone":"9047806562","password":"*******"};
-const userTitle = { "name": "Hi, My name is", "email": "My email address is", "DOB": "My birthday is", "address": "My address is", "phone": "My phone number is", "password": "My password is" };
+
+const USERTITLE = { "name": "Hi, My name is", "email": "My email address is", "DOB": "My birthday is", "address": "My address is", "phone": "My phone number is", "password": "My password is" };
+const USERICON  = { "name": faUserAlt, "email": faEnvelope, "DOB": faCalendarAlt, "address": faMapMarkedAlt, "phone": faPhoneAlt, "password": faUnlockKeyhole };
+const KEYS = ["name", "email", "DOB", "address", "phone", "password"];
 
 export default function Contact() {
 
@@ -14,9 +15,10 @@ export default function Contact() {
   const [info, setInfo] = useState("");
   const [title, setTitle] = useState("");
   const [imgUrl, setImgUrl] = useState("");
+  const [hovered,setHovered] = useState("");
 
   function onHover(hoveredItem) {
-  //  console.log(user);
+    //  console.log(user);
     let UserInfo = "";
     switch (hoveredItem) {
       case "name":
@@ -39,7 +41,8 @@ export default function Contact() {
         break;
     }
     setInfo(UserInfo);
-    setTitle(userTitle[hoveredItem]);
+    setTitle(USERTITLE[hoveredItem]);
+    setHovered(hoveredItem);
   }
 
 
@@ -53,8 +56,8 @@ export default function Contact() {
         setUser(data);
         setImgUrl(data.results[0].picture.large);
         setInfo(data.results[0].name.first + " " + data.results[0].name.last);
-      //  console.log(userTitle.name);
-        setTitle(userTitle.name);
+        //  console.log(USERTITLE.name);
+        setTitle(USERTITLE.name);
       });
 
 
@@ -71,7 +74,7 @@ export default function Contact() {
     <Card className="rel crd">
       <Card.Body>
         <div className='pb-4' >
-          <img className="pic hcenter" src={imgUrl} style={{visibility: imgUrl ? "visible" : "hidden"}}/>
+          <img className="pic hcenter" src={imgUrl} style={{ visibility: imgUrl ? "visible" : "hidden" }} />
         </div>
 
 
@@ -83,24 +86,23 @@ export default function Contact() {
         <div className='mid'>
           <div >
             <ul className='iconlist ' >
-              <li className='m-1 m-sm-1 m-md-3  m-lg-4 mid ' onMouseEnter={() => onHover("name")}>
-                <FontAwesomeIcon icon={faUserAlt} />
-              </li>
-              <li className='m-1  m-sm-1 m-md-3 m-lg-4 mid d-none d-sm-block' onMouseEnter={() => onHover("email")}>
-                <FontAwesomeIcon icon={faEnvelope} />
-              </li>
-              <li className='m-1  m-sm-1 m-md-3 m-lg-4 mid' onMouseEnter={() => onHover("DOB")}>
-                <FontAwesomeIcon icon={faCalendarAlt} />
-              </li>
-              <li className='m-1  m-sm-1 m-md-3 m-lg-4 mid' onMouseEnter={() => onHover("address")}>
-                <FontAwesomeIcon icon={faMapMarkedAlt} />
-              </li>
-              <li className='m-1  m-sm-1 m-md-3 m-lg-4 mid' onMouseEnter={() => onHover("phone")}>
-                <FontAwesomeIcon icon={faPhoneAlt} />
-              </li>
-              <li className='m-1  m-sm-1 m-md-3 m-lg-4 mid' onMouseEnter={() => onHover("password")}>
-                <FontAwesomeIcon icon={faUnlockKeyhole} />
-              </li>
+
+              {
+                KEYS.map((k) => {
+
+                  return (
+                    <li key={k} className='m-1 m-sm-1 m-md-3  m-lg-4 '>
+                      <div className={hovered === k ? "active ease":"ease"} onMouseEnter={() => onHover(k)}>
+                        <FontAwesomeIcon className='icon mid ' icon={USERICON[k]} />
+                        <FontAwesomeIcon className='iconb mid ' icon={USERICON [k]} />
+                      </div>
+                    </li>
+                  );
+
+                })
+              }
+
+
             </ul>
           </div>
         </div>
