@@ -91,7 +91,7 @@ export default function Contact() {
                 KEYS.map((k) => {
 
                   return (
-                    <li key={k} className='m-1 m-sm-1 m-md-3  m-lg-4 '>
+                    <li key={k} className={ (k==="email"?"d-none d-sm-block ":"") + 'm-1 m-sm-1 m-md-3  m-lg-4'}>
                       <div className={hovered === k ? "active ease":"ease"} onMouseEnter={() => onHover(k)}>
                         <FontAwesomeIcon className='icon mid ' icon={USERICON[k]} />
                         <FontAwesomeIcon className='iconb mid ' icon={USERICON [k]} />
