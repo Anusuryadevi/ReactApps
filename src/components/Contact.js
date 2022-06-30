@@ -17,7 +17,7 @@ const Contact = (props) => {
  const dispatch = useDispatch()
 
   function onHover(hoveredItem) {
-    const payload = { title : USERTITLE[hoveredItem], info: user[hoveredItem]}
+    const payload = { title : USERTITLE[hoveredItem], info: user[hoveredItem], hoveredItem : hoveredItem}
     dispatch({type:actions.HOVERED,payload: payload})
   }
 
@@ -61,7 +61,7 @@ const Contact = (props) => {
 
                   return (
                     <li key={k} className={ (k==="email"?"d-none d-sm-block ":"") + 'm-1 m-sm-1 m-md-3  m-lg-4'}>
-                      <div className={hovered === k ? "active ease":"ease"} onMouseEnter={() => onHover(k)}>
+                      <div className={user.hoveredItem === k ? "active ease":"ease"} onMouseEnter={() => onHover(k)}>
                         <FontAwesomeIcon className='icon mid ' icon={USERICON[k]} />
                         <FontAwesomeIcon className='iconb mid ' icon={USERICON [k]} />
                       </div>

@@ -12,6 +12,7 @@ export const fetchUser = async () => {
    data.imgurl = user.results[0].picture.large;
    data.title = "Hi My name is"
    data.info = data.name
+   data.hovereditem = "name"
    console.log("inside fetchhhh", data)
     return data;
 }

@@ -16,7 +16,7 @@ const initialState = {
            
         case actions.HOVERED:
             console.log("hovered",action.payload)
-             return { ...store, user: { ...store.user, title : action.payload.title, info: action.payload.info } };
+             return { ...store, user: { ...store.user, title : action.payload.title, info: action.payload.info, hoveredItem : action.payload.hoveredItem } };
         default: 
         console.log("default",store) 
         return store
