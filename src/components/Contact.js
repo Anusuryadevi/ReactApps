@@ -9,7 +9,6 @@ import * as actions from '../state/ActionTypes'
 const USERTITLE = { "name": "Hi, My name is", "email": "My email address is", "DOB": "My birthday is", "address": "My address is", "phone": "My phone number is", "password": "My password is" };
 const USERICON  = { "name": faUserAlt, "email": faEnvelope, "DOB": faCalendarAlt, "address": faMapMarkedAlt, "phone": faPhoneAlt, "password": faUnlockKeyhole };
 const KEYS = ["name", "email", "DOB", "address", "phone", "password"];
-const hovered = false
 const Contact = (props) => {
 
  const user = useSelector((store)=>store.user)
@@ -43,7 +42,7 @@ const Contact = (props) => {
     <Card className="rel crd">
       <Card.Body>
       <div className='pb-4' >
-          <img className="pic hcenter" src={user.imgUrl} style={{ visibility: user.imgUrl ? "visible" : "hidden" }} />
+          <img className="pic hcenter" src={user.imgurl}  style={{ visibility: user.imgurl ? "visible" : "hidden" }}/>
         </div>
 
 
@@ -63,11 +62,10 @@ const Contact = (props) => {
                     <li key={k} className={ (k==="email"?"d-none d-sm-block ":"") + 'm-1 m-sm-1 m-md-3  m-lg-4'}>
                       <div className={user.hoveredItem === k ? "active ease":"ease"} onMouseEnter={() => onHover(k)}>
                         <FontAwesomeIcon className='icon mid ' icon={USERICON[k]} />
-                        <FontAwesomeIcon className='iconb mid ' icon={USERICON [k]} />
+                        <FontAwesomeIcon className='iconb mid ' icon={USERICON[k]} />
                       </div>
                     </li>
                   );
-
                 })
               }
 

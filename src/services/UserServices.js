@@ -13,6 +13,6 @@ export const fetchUser = async () => {
    data.title = "Hi My name is"
    data.info = data.name
    data.hovereditem = "name"
-   console.log("inside fetchhhh", data)
+   console.log("inside fetchhhh", data.imgurl)
     return data;
 }
