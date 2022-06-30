@@ -2,63 +2,32 @@ import { Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt, faEnvelope, faMapMarkedAlt, faPhoneAlt, faSpaghettiMonsterFlying, faUnlockKeyhole, faUserAlt } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from 'react';
-import { useState } from 'react';
-
+import { useSelector, useDispatch, connect } from 'react-redux';
+import { fetchUser } from '../services/UserServices';
+import * as actions from '../state/ActionTypes'
 
 const USERTITLE = { "name": "Hi, My name is", "email": "My email address is", "DOB": "My birthday is", "address": "My address is", "phone": "My phone number is", "password": "My password is" };
 const USERICON  = { "name": faUserAlt, "email": faEnvelope, "DOB": faCalendarAlt, "address": faMapMarkedAlt, "phone": faPhoneAlt, "password": faUnlockKeyhole };
 const KEYS = ["name", "email", "DOB", "address", "phone", "password"];
+const hovered = false
+const Contact = (props) => {
 
-export default function Contact() {
-
-  const [user, setUser] = useState({});
-  const [info, setInfo] = useState("");
-  const [title, setTitle] = useState("");
-  const [imgUrl, setImgUrl] = useState("");
-  const [hovered,setHovered] = useState("");
+ const user = useSelector((store)=>store.user)
+ console.log("user..",user.name)
+ const dispatch = useDispatch()
 
   function onHover(hoveredItem) {
-    //  console.log(user);
-    let UserInfo = "";
-    switch (hoveredItem) {
-      case "name":
-        UserInfo = user.results[0].name.first + " " + user.results[0].name.last;
-        break;
-      case "email":
-        UserInfo = user.results[0].email;
-        break;
-      case "phone":
-        UserInfo = user.results[0].phone;
-        break;
-      case "DOB":
-        UserInfo = user.results[0].dob.date;
-        break;
-      case "address":
-        UserInfo = user.results[0].location.city + " " + user.results[0].location.country;
-        break;
-      case "password":
-        UserInfo = user.results[0].login.password;
-        break;
-    }
-    setInfo(UserInfo);
-    setTitle(USERTITLE[hoveredItem]);
-    setHovered(hoveredItem);
+    const payload = { title : USERTITLE[hoveredItem], info: user[hoveredItem]}
+    dispatch({type:actions.HOVERED,payload: payload})
   }
 
 
   useEffect(() => {
-    let user = [];
-
-
-    fetch('https://randomuser.me/api/')
-      .then(response => response.json())
-      .then(data => {
-        setUser(data);
-        setImgUrl(data.results[0].picture.large);
-        setInfo(data.results[0].name.first + " " + data.results[0].name.last);
-        //  console.log(USERTITLE.name);
-        setTitle(USERTITLE.name);
-      });
+    console.log("use Effect")
+    fetchUser().then( (payload) => dispatch({type:actions.FETCH_USERDATA, payload:payload}) )
+    .catch((e)=>console.log("Error in fetching user data", e))
+    
+    console.log("use effect after dispatch",user)
 
 
 
@@ -73,14 +42,14 @@ export default function Contact() {
 
     <Card className="rel crd">
       <Card.Body>
-        <div className='pb-4' >
-          <img className="pic hcenter" src={imgUrl} style={{ visibility: imgUrl ? "visible" : "hidden" }} />
+      <div className='pb-4' >
+          <img className="pic hcenter" src={user.imgUrl} style={{ visibility: user.imgUrl ? "visible" : "hidden" }} />
         </div>
 
 
         <div className='mid'>
-          <div className='title'>{title}</div>
-          <div className='info'>{info}</div>
+          <div className='title'>{user.title}</div>
+          <div className='info'>{user.info}</div>
 
         </div>
         <div className='mid'>
@@ -111,3 +80,11 @@ export default function Contact() {
 
   </>
 }
+const mapStateToProps = function(state) {
+  return {
+    user : state.user
+  }
+}
+
+export default connect(mapStateToProps)(Contact);
+// export default Contact;
